@@ -131,7 +131,7 @@ export default function Pricing() {
                       : "bg-muted text-foreground hover:bg-muted/80 hover:border-primary/50 active:scale-95"
                   }`}
                 >
-                  Empezar ahora
+                    Empiezar ahora
                 </button>
 
                 <ul className="space-y-3">
