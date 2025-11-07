@@ -1,6 +1,9 @@
 "use client"
 
+import { useEffect } from "react"
+import { useRouter } from "next/navigation"
 import { useState } from "react"
+import { useAuth } from "@/lib/auth-context"
 import DashboardLayout from "@/components/dashboard/dashboard-layout"
 import Home from "@/components/dashboard/home"
 import Metrics from "@/components/dashboard/metrics"
@@ -8,18 +11,39 @@ import Automations from "@/components/dashboard/automations"
 import AIData from "@/components/dashboard/ai-data"
 import Account from "@/components/dashboard/account"
 import Support from "@/components/dashboard/support"
-import Login from "@/components/dashboard/login"
 
 export default function DashboardPage() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const router = useRouter()
+  const { user, loading } = useAuth()
   const [activeSection, setActiveSection] = useState("home")
 
-  if (!isAuthenticated) {
-    return <Login onLogin={() => setIsAuthenticated(true)} />
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push("/login")
+    }
+  }, [user, loading, router])
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-[#001328] via-[#012b36] to-[#006184] flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-12 h-12 rounded-full border-4 border-[#1a3a52] border-t-[#00e1b4] animate-spin mx-auto"></div>
+          <p className="text-[#96b5c7] mt-4">Cargando panel...</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (!user) {
+    return null
   }
 
   return (
-    <DashboardLayout activeSection={activeSection} onSectionChange={setActiveSection}>
+    <DashboardLayout
+      activeSection={activeSection}
+      onSectionChange={setActiveSection}
+      role={user?.email ? "admin" : "user"}
+    >
       {activeSection === "home" && <Home />}
       {activeSection === "metrics" && <Metrics />}
       {activeSection === "automations" && <Automations />}
