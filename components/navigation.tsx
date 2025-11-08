@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { Menu, X } from "lucide-react"
 import { Logo } from "./logo"
 
@@ -13,8 +14,13 @@ const navLinks = [
   { label: "Contacto", href: "#contact" },
 ]
 
-export default function Navigation({ onLoginClick }: { onLoginClick: () => void }) {
+export default function Navigation() {
+  const router = useRouter()
   const [isOpen, setIsOpen] = useState(false)
+
+  const handleLoginClick = () => {
+    router.push("/login")
+  }
 
   return (
     <nav className="fixed top-0 w-full bg-background/80 backdrop-blur-md border-b border-border z-50 transition-colors duration-300">
@@ -40,7 +46,7 @@ export default function Navigation({ onLoginClick }: { onLoginClick: () => void 
 
           {/* Login Button */}
           <button
-            onClick={onLoginClick}
+            onClick={handleLoginClick}
             className="hidden md:block px-6 py-2 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full font-semibold transition-all duration-200 hover:shadow-lg hover:shadow-primary/20 active:scale-95"
           >
             Iniciar sesión
@@ -71,7 +77,7 @@ export default function Navigation({ onLoginClick }: { onLoginClick: () => void 
             ))}
             <button
               onClick={() => {
-                onLoginClick()
+                handleLoginClick()
                 setIsOpen(false)
               }}
               className="w-full mt-4 px-4 py-2 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full font-semibold transition-all"

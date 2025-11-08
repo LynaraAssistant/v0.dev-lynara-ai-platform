@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { Check } from "lucide-react"
 
 const plans = [
@@ -41,7 +42,12 @@ const plans = [
 ]
 
 export default function Pricing() {
+  const router = useRouter()
   const [isAnnual, setIsAnnual] = useState(false)
+
+  const handleStartNow = () => {
+    router.push("/register")
+  }
 
   return (
     <section id="pricing" className="py-20 px-4 sm:px-6 lg:px-8">
@@ -125,13 +131,14 @@ export default function Pricing() {
                 </div>
 
                 <button
+                  onClick={handleStartNow}
                   className={`w-full py-3 rounded-lg font-semibold transition-all duration-200 mb-6 ${
                     plan.featured
                       ? "bg-primary text-primary-foreground hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/40 active:scale-95"
                       : "bg-muted text-foreground hover:bg-muted/80 hover:border-primary/50 active:scale-95"
                   }`}
                 >
-                    Empiezar ahora
+                  Empezar ahora
                 </button>
 
                 <ul className="space-y-3">

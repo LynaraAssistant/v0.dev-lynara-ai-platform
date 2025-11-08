@@ -21,11 +21,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [role, setRole] = useState<string>("user")
 
   useEffect(() => {
+    if (!auth) {
+      setLoading(false)
+      return
+    }
+
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser)
       if (currentUser) {
         const userRole = localStorage.getItem(`user_role_${currentUser.uid}`) || "user"
         setRole(userRole)
+      } else {
+        setRole("user")
       }
       setLoading(false)
     })

@@ -1,6 +1,5 @@
 "use client"
 
-import { useState } from "react"
 import Navigation from "@/components/navigation"
 import Hero from "@/components/hero"
 import About from "@/components/about"
@@ -8,16 +7,9 @@ import Automations from "@/components/automations"
 import Pricing from "@/components/pricing"
 import Waitlist from "@/components/waitlist"
 import Contact from "@/components/contact"
-import Dashboard from "@/components/dashboard"
 import Footer from "@/components/footer"
 
 export default function Home() {
-  const [showDashboard, setShowDashboard] = useState(false)
-
-  if (showDashboard) {
-    return <Dashboard onBack={() => setShowDashboard(false)} />
-  }
-
   return (
     <main className="min-h-screen bg-gradient-to-b from-[#001328] via-[#012b36] to-[#006184] overflow-hidden">
       {/* Background gradient effect */}
@@ -27,7 +19,7 @@ export default function Home() {
       </div>
 
       <div className="relative z-10">
-        <Navigation onLoginClick={() => setShowDashboard(true)} />
+        <Navigation />
         <Hero />
         <About />
         <Automations />
